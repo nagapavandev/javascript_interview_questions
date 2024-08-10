@@ -2,4 +2,4 @@
 This Repo is basically to collate all the interview questions related to javascript
 
 # Running the Project
-Run this project using node <FileName>.js
+Run this project using `node <FileName>.js`
