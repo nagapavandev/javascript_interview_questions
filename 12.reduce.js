@@ -30,9 +30,8 @@ if (!Array.prototype.customReduce) {
       throw new TypeError(callback + ' is not a function');
     }
 
-    var length = this.length >>> 0; // Convert length to an unsigned 32-bit integer
-
-    if (length === 0 && arguments.length === 1) {
+    console.log(`arguments is ${JSON.stringify(arguments)}`);
+    if (this.length === 0 && arguments.length === 1) {
       throw new TypeError('Reduce of empty array with no initial value');
     }
 
@@ -45,19 +44,17 @@ if (!Array.prototype.customReduce) {
       accumulator = this[index++];
     }
 
-    function recursiveReduce(i, acc) {
+    function recursiveReduce(i, accumulator, array, length) {
       if (i >= length) {
-        return acc;
+        return accumulator;
       }
-      if (i in this) {
-        acc = callback(acc, this[i], i, this);
-      }
-      return recursiveReduce(i + 1, acc);
+      accumulator = callback(accumulator, array[i], i, array);
+      return recursiveReduce(i + 1, accumulator, array, length);
     }
 
-    return recursiveReduce(index, accumulator);
+    return recursiveReduce(index, accumulator, this, this.length);
   };
 }
 
-const sumA = numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-console.log(`sumA is ${sumA}`); // Output: 15
+const customSum = numbers.customReduce((accumulator, currentValue) => accumulator + currentValue, 0);
+console.log(`customSum is ${customSum}`); // Output: 15
