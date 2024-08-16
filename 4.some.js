@@ -23,3 +23,37 @@ const words = ['apple', 'banana', 'cherry'];
 const hasWordWithA = words.some(word => word.includes('a'));
 
 console.log(hasWordWithA); // Output: true
+
+
+// polyfill for some function
+
+if (!Array.prototype.customSome) {
+  Array.prototype.customSome = function (callback, thisArg) {
+    // Ensure 'this' is a valid object
+    if (this == null) {
+      throw new TypeError('Array.prototype.some called on null or undefined');
+    }
+
+    // Ensure callback is a function
+    if (typeof callback !== 'function') {
+      throw new TypeError(callback + ' is not a function');
+    }
+
+    console.log(`this is ${this}`);
+    var array = Object(this); // Convert 'this' to an object
+    console.log(`array is ${array}`);
+    // Iterate through the array using 'reduce'
+    return Array.prototype.reduce.call(this, function (found, value, index) {
+      // Short-circuit if we already found a match
+      if (found) return true;
+
+      // Check if the callback returns true for the current value
+      return callback.call(thisArg, value, index, this);
+    }, false);
+  };
+}
+
+
+let hasWordWithB = words.customSome(word => word.includes('a'));
+
+console.log(hasWordWithB); // Output: true
