@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node start.js"
+    "start": "node start.js",
+    "build": "tsc",
+    "starT": "ts-node src/index.ts"
   },
   "engines": {
     "node": ">=7.6.0",
@@ -14,5 +16,8 @@
   "dependencies": {
     "lodash": "~4.17.21"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
 }
